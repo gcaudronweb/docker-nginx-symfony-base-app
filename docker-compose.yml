@@ -1,0 +1,29 @@
+version: "3.4"
+
+services:
+    php:
+        build:
+            context: docker/php
+            target: base_app
+        ports: 
+            - 9000
+        networks:
+            - internal
+        volumes:
+            - ./www/:/var/www/html/
+    nginx:
+        build:
+            context: docker/nginx
+            target: web_server
+        ports:
+            - 80:80
+        networks:
+            - internal
+        volumes:
+            - ./www/:/var/www/html/
+volumes: 
+    www:
+
+networks:
+    internal:
+        driver: bridge
